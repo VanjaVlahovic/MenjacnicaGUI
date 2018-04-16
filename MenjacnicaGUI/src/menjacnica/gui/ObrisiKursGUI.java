@@ -1,5 +1,8 @@
 package menjacnica.gui;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,15 +12,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 import java.awt.Toolkit;
 
-public class DodajKursGUI extends JFrame {
+public class ObrisiKursGUI extends JFrame {
 
 	private JPanel contentPane;
+	private MenjacnicaGUI gp;
 	private JLabel lblSifra;
-	private JTextField textFieldSifra;
 	private JLabel lblNaziv;
+	private JTextField textFieldSifra;
 	private JTextField textFieldNaziv;
 	private JLabel lblProdajniKurs;
 	private JLabel lblKupovniKurs;
@@ -27,18 +34,19 @@ public class DodajKursGUI extends JFrame {
 	private JLabel lblSkraceniNaziv;
 	private JTextField textFieldSrednjiKurs;
 	private JTextField textFieldSkraceniNaziv;
-	private JButton btnDodaj;
+	private JButton btnObrisi;
 	private JButton btnOdustani;
-	private MenjacnicaGUI gp;
-
+	private JCheckBox chckbxNewCheckBox;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Create the frame.
 	 */
-	public DodajKursGUI(MenjacnicaGUI gp) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(DodajKursGUI.class.getResource("/icons/8390_256x256.png")));
-		setTitle("Dodaj kurs");
+	public ObrisiKursGUI(MenjacnicaGUI gp) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ObrisiKursGUI.class.getResource("/icons/47-512.png")));
+		
 		setResizable(false);
+		setTitle("Obrisi kurs");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -57,7 +65,9 @@ public class DodajKursGUI extends JFrame {
 		contentPane.add(getLblSkraceniNaziv());
 		contentPane.add(getTextFieldSrednjiKurs());
 		contentPane.add(getTextFieldSkraceniNaziv());
-		contentPane.add(getBtnDodaj());
+		contentPane.add(getChckbxNewCheckBox());
+		contentPane.add(getLblNewLabel());
+		contentPane.add(getBtnObrisi());
 		contentPane.add(getBtnOdustani());
 		this.gp = gp;
 	}
@@ -68,18 +78,18 @@ public class DodajKursGUI extends JFrame {
 		}
 		return lblSifra;
 	}
+	private JLabel getLblNaziv() {
+		if (lblNaziv == null) {
+			lblNaziv = new JLabel("Naziv");
+		}
+		return lblNaziv;
+	}
 	private JTextField getTextFieldSifra() {
 		if (textFieldSifra == null) {
 			textFieldSifra = new JTextField();
 			textFieldSifra.setColumns(10);
 		}
 		return textFieldSifra;
-	}
-	private JLabel getLblNaziv() {
-		if (lblNaziv == null) {
-			lblNaziv = new JLabel("Naziv");
-		}
-		return lblNaziv;
 	}
 	private JTextField getTextFieldNaziv() {
 		if (textFieldNaziv == null) {
@@ -94,6 +104,7 @@ public class DodajKursGUI extends JFrame {
 		}
 		return lblProdajniKurs;
 	}
+	
 	private JLabel getLblKupovniKurs() {
 		if (lblKupovniKurs == null) {
 			lblKupovniKurs = new JLabel("Kupovni kurs");
@@ -140,26 +151,27 @@ public class DodajKursGUI extends JFrame {
 		}
 		return textFieldSkraceniNaziv;
 	}
-	private JButton getBtnDodaj() {
-		if (btnDodaj == null) {
-			btnDodaj = new JButton("Dodaj");
-			btnDodaj.addActionListener(new ActionListener() {
+	private JButton getBtnObrisi() {
+		if (btnObrisi == null) {
+			btnObrisi = new JButton("Obrisi");
+			btnObrisi.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-				try {
-					String kurs = "Sifra: "+textFieldSifra.getText()+" Naziv: "+textFieldNaziv.getText()+
-							" Prodajni: "+textFieldProdajniKurs.getText()+" Kupovni: "+textFieldKupovniKurs.getText()+
-							" Srednji: "+textFieldSrednjiKurs.getText()+" Skraceni naziv: "+textFieldSkraceniNaziv.getText();					
-					gp.dodaj(kurs);
-					dispose();
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null,
-							e1.getMessage(), "Greska",
-							JOptionPane.ERROR_MESSAGE);
-				}
+					try {
+						String kurs = "Sifra: "+textFieldSifra.getText()+" Naziv: "+textFieldNaziv.getText()+
+								" Prodajni: "+textFieldProdajniKurs.getText()+" Kupovni: "+textFieldKupovniKurs.getText()+
+								" Srednji: "+textFieldSrednjiKurs.getText()+" Skraceni naziv: "+textFieldSkraceniNaziv.getText();					
+						gp.dodaj(kurs);
+						dispose();
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null,
+								e1.getMessage(), "Greska",
+								JOptionPane.ERROR_MESSAGE);
+					}					
 				}
 			});
+			btnObrisi.setEnabled(false);
 		}
-		return btnDodaj;
+		return btnObrisi;
 	}
 	private JButton getBtnOdustani() {
 		if (btnOdustani == null) {
@@ -171,5 +183,25 @@ public class DodajKursGUI extends JFrame {
 			});
 		}
 		return btnOdustani;
+	}
+	private JCheckBox getChckbxNewCheckBox() {
+		if (chckbxNewCheckBox == null) {
+			chckbxNewCheckBox = new JCheckBox("Zaista obrisi kurs");
+			chckbxNewCheckBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (chckbxNewCheckBox.isSelected())
+						btnObrisi.setEnabled(true);
+					else
+						btnObrisi.setEnabled(false);
+				}
+			});
+		}
+		return chckbxNewCheckBox;
+	}
+	private JLabel getLblNewLabel() {
+		if (lblNewLabel == null) {
+			lblNewLabel = new JLabel("");
+		}
+		return lblNewLabel;
 	}
 }

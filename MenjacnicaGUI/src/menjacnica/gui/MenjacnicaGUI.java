@@ -236,8 +236,8 @@ public class MenjacnicaGUI extends JFrame {
 			btnDodajKurs = new JButton("Dodaj kurs");
 			btnDodajKurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					DodajKursGUI dkk = new DodajKursGUI(gp);
-					dkk.setVisible(true);					
+					DodajKursGUI dk = new DodajKursGUI(gp);
+					dk.setVisible(true);					
 				}
 			});
 			btnDodajKurs.setPreferredSize(new Dimension(120, 23));
@@ -247,6 +247,13 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnObrisiKurs() {
 		if (btnObrisiKurs == null) {
 			btnObrisiKurs = new JButton("Obrisi kurs");
+			btnObrisiKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ObrisiKursGUI ok = new ObrisiKursGUI(gp);
+					ok.setVisible(true);		
+					
+				}
+			});
 			btnObrisiKurs.setPreferredSize(new Dimension(120, 23));
 		}
 		return btnObrisiKurs;
@@ -300,6 +307,12 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnObrisiKurs2() {
 		if (btnObrisiKurs2 == null) {
 			btnObrisiKurs2 = new JButton("Obrisi kurs");
+			btnObrisiKurs2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ObrisiKursGUI ok = new ObrisiKursGUI(gp);
+					ok.setVisible(true);		
+				}
+			});
 			btnObrisiKurs2.setMaximumSize(new Dimension(120, 23));
 		}
 		return btnObrisiKurs2;
