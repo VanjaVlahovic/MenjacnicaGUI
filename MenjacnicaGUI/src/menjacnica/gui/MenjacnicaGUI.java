@@ -57,7 +57,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton btnObrisiKurs2;
 	private JButton btnIzvrsiZamenu2;
 	private JTextArea textArea;
-
+	private MenjacnicaGUI gp;
 	/**
 	 * Launch the application.
 	 */
@@ -78,9 +78,6 @@ public class MenjacnicaGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MenjacnicaGUI() {
-		createContents();
-	}
-	private void createContents() {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
@@ -100,6 +97,8 @@ public class MenjacnicaGUI extends JFrame {
 		contentPane.add(getScrollPane(), BorderLayout.CENTER);
 		contentPane.add(getPanel(), BorderLayout.EAST);
 		contentPane.add(getTextArea(), BorderLayout.SOUTH);
+		this.gp = this;
+	
 	}
 
 	private JMenuBar getMenuBar_1() {
@@ -235,6 +234,12 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnDodajKurs() {
 		if (btnDodajKurs == null) {
 			btnDodajKurs = new JButton("Dodaj kurs");
+			btnDodajKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					DodajKursGUI dkk = new DodajKursGUI(gp);
+					dkk.setVisible(true);					
+				}
+			});
 			btnDodajKurs.setPreferredSize(new Dimension(120, 23));
 		}
 		return btnDodajKurs;
@@ -282,6 +287,12 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnDodajKurs2() {
 		if (btnDodajKurs2 == null) {
 			btnDodajKurs2 = new JButton("Dodaj kurs");
+			btnDodajKurs2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					DodajKursGUI dkk = new DodajKursGUI(gp);
+					dkk.setVisible(true);					
+				}
+			});
 			btnDodajKurs2.setMaximumSize(new Dimension(120, 23));
 		}
 		return btnDodajKurs2;
@@ -316,5 +327,10 @@ public class MenjacnicaGUI extends JFrame {
 		if (opcija == JOptionPane.YES_OPTION)
 			System.exit(0);
 	}
+	
+	public void dodaj(String parametar) {
+		textArea.setText(textArea.getText()+"\n"+parametar);
+		
+	}	
 	
 }
